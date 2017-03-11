@@ -1,9 +1,12 @@
-\documentclass{beamer}
 \usepackage[orientation=portrait, size=a0, scale=1.4]{beamerposter}
 
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage{lmodern}
+%\usepackage[utf8]{inputenc}
+%\usepackage{lipsum}
+%\usepackage{xparse}
+%\usepackage[colorgrid,texcoord]{eso-pic}
+\usepackage[absolute,overlay,showboxes]{textpos}
 
 \usefonttheme{professionalfonts}
 %\usefonttheme{serif}
@@ -95,6 +98,18 @@
 \let\tempone\itemize
 \let\temptwo\enditemize
 \renewenvironment{itemize}{\tempone\addtolength{\itemsep}{0.5\baselineskip}}{\temptwo}
+
+\newsavebox{\fminipagebox}
+\NewDocumentEnvironment{fminipage}{m O{\fboxsep}}
+ {\par\kern#2\noindent\begin{lrbox}{\fminipagebox}
+  \begin{minipage}{#1}\ignorespaces}
+ {\end{minipage}\end{lrbox}%
+  \makebox[#1]{%
+    \kern\dimexpr-\fboxsep-\fboxrule\relax
+    \fbox{\usebox{\fminipagebox}}%
+    \kern\dimexpr-\fboxsep-\fboxrule\relax
+  }\par\kern#2
+ }
                                    
 \renewcommand{\maketitle}
 {
@@ -122,187 +137,32 @@
 	\end{textblock}
 	
 	\begin{textblock}{12}(4, 108)
-	\begin{center}
-	\textbf{Promoteur}
-	\end{center}
+		\begin{center}
+		\textbf{Promoteur}
+		\end{center}
 	\end{textblock}
 	\begin{textblock}{32}(20, 108)
-	\begin{minipage}{0.49\textwidth}
-	\begin{center}
-	\textbf{Partenaire industriel}
-	\end{center}
-	\end{minipage}
-	\begin{minipage}{0.49\textwidth}
-	\begin{center}
-	\textbf{Partenaire scientifique}
-	\end{center}
-	\end{minipage}
+		\begin{minipage}{0.49\textwidth}
+			\begin{center}
+			\textbf{Partenaire industriel}
+			\end{center}
+		\end{minipage}
+		\begin{minipage}{0.49\textwidth}
+			\begin{center}
+			\textbf{Partenaire scientifique}
+			\end{center}
+		\end{minipage}
 	\end{textblock}
 	\begin{textblock}{32}(20, 110)
-	\begin{minipage}{0.49\textwidth}
-	\begin{center}
-	\includegraphics[width=\@industrialpartnersize]{\@industrialpartnerimage}
-	\end{center}
-	\end{minipage}
-	\begin{minipage}{0.49\textwidth}
-	\begin{center}
-	\includegraphics[width=\@scientificpartnersize]{\@scientificpartnerimage}
-	\end{center}
-	\end{minipage}
+		\begin{minipage}{0.49\textwidth}
+			\begin{center}
+			\includegraphics[width=\@industrialpartnersize]{\@industrialpartnerimage}
+			\end{center}
+		\end{minipage}
+		\begin{minipage}{0.49\textwidth}
+			\begin{center}
+			\includegraphics[width=\@scientificpartnersize]{\@scientificpartnerimage}
+			\end{center}
+		\end{minipage}
 	\end{textblock}
 }
-
-
-\usepackage{lipsum}
-\usepackage{xparse}
-%\usepackage[colorgrid,texcoord]{eso-pic}
-\usepackage[absolute,overlay,showboxes]{textpos}
-
-\newsavebox{\fminipagebox}
-\NewDocumentEnvironment{fminipage}{m O{\fboxsep}}
- {\par\kern#2\noindent\begin{lrbox}{\fminipagebox}
-  \begin{minipage}{#1}\ignorespaces}
- {\end{minipage}\end{lrbox}%
-  \makebox[#1]{%
-    \kern\dimexpr-\fboxsep-\fboxrule\relax
-    \fbox{\usebox{\fminipagebox}}%
-    \kern\dimexpr-\fboxsep-\fboxrule\relax
-  }\par\kern#2
- }
-
-\makeatother
-\postertitle{\textbf{Projet First HE: AUTODIAG}}%{\huge}
-\postersubtitle{Conception d'un outil d'aide au diagnostic des défaillances et d'aide à la maintenance prédictive des actionneurs électriques HVAC}
-\authors{J. {\sc Vachaudez}\textsuperscript{1}, S. {\sc Eggermont}\textsuperscript{1}, J. {\sc Callemeyn}\textsuperscript{1}, J-C {\sc Nutte}\textsuperscript{1}, M. {\sc Kinaert}\textsuperscript{2}, L. {\sc Catoire}\textsuperscript{2}, T. {\sc Di Pietro}\textsuperscript{3}}
-\institutes{1: CERISIC, 2: ULB, 3: I-Care}
-\contact{julien.vachaudez@cerisic.be}
-\industrialpartner{0.9\textwidth}{img/I-Care.png}
-\scientificpartner{0.9\textwidth}{img/ULB.jpg}
-
-\begin{document}
-
-\setlength{\TPHorizModule}{1cm}
-\setlength{\TPVertModule}{1cm}
-
-
-\maketitle
-
-\begin{textblock}{36}(4, 20)
-	\begin{minipage}{0.99\textwidth}
-	%\begin{center}
-	%\begin{minipage}{0.9\textwidth}
-	%\begin{frame}
-	\section{1. Contexte}
-		Les ondes radio ne passent pas naturellement dans les milieux confinés, comme les tunnels, les métros ou les bâtiments. La société partenaire du projet, SEE Telecom, développe des répéteurs pour pouvoir créer une continuité de service radio au sein de ces milieux afin d'assurer la communication de services de secours tels que les pompiers, ambulances, police ou encore des services commerciaux tels que le GSM, la FM ou l'AM. Ces services ont une importance capitale pour la sécurité lors d'un incident au sein du milieu confiné.
-		\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=0.9\textwidth]{img/ArchitectureMaterielle.png}
-		\caption{Exemple d'architecture matérielle en milieu confiné}
-		\end{figure}
-		L'entreprise partenaire dispose déjà à ce jour de répéteurs pour de nombreux services radio. Toutefois, ces répéteurs sont basés sur un matériel figé. Par conséquent, si l'on souhaite modifier la configuration pour assurer la transmission d'un autre service, il est nécessaire de se rendre sur place pour opérer les changements, ce qui n'est pas aisé.
-		
-		
-	\section{2. Objectifs}
-		Les objectifs relatifs à ce projet sont multiples :
-	%	\begin{itemize}
-	%	\item adapter la configuration du répéteur en fonction du matériel;
-	%	\item rendre reconfigurable le répéteur sans devoir agir physiquement sur celui-ci;
-	%	\item permettre une gestion intelligente de la reconfiguration automatique des modules en cas de panne.
-	%	\end{itemize}
-	%\end{frame}
-	%\end{minipage}
-	%\end{center}
-	\end{minipage}
-\end{textblock}
-\begin{textblock}{2}(40, 20)
-	\begin{minipage}{0.99\textwidth}
-	\begin{center}
-	\rule{5pt}{84cm}	
-	\end{center}
-	\end{minipage}
-\end{textblock}
-\begin{textblock}{36}(42, 20)
-	\begin{minipage}{0.99\textwidth}
-	%\begin{center}
-	%\begin{minipage}{0.9\textwidth}
-	
-	\section{3. Génération des configuration}
-		Il s'agit ici de générer les configurations dites "statiques" d'un répéteur, par exemple, les coefficients d'un filtre donné. Chaque répéteur peut contenir plusieurs configurations statiques et ainsi, l'utilisateur peut passer d'une configuration à une autre.
-		La génération de la configuration statique se fait à l'aide d'un script Python. Les caractéristiques du matériel sont reprises dans un fichier XML. Ainsi, il est facile de générer de nouvelles configurations si le matériel change. À cela peuvent être ajoutés d'autres paramètres spécifiques au service répété.
-		\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=0.9\textwidth]{img/Architecture2.png}
-		\caption{Exemple d'architecture matérielle en milieu confiné}
-		\end{figure}
-	
-	
-	\section{4. Plateforme}
-		La plateforme logicielle n'en est qu'à ses débuts mais elle aura pour objectif de "commander" la reconfiguration des cartes en cas de nécessité. Cette plateforme sera codée en Java. Pour permettre une meilleure gestion graphique de l'interface homme machine, la partie client sera codée en JavaFX. La plateforme supervise les cartes EMS (Element Management System) qui elles-mêmes sont reliées aux divers répéteurs.
-		\begin{figure}[!ht]
-		\centering
-		\includegraphics[width=0.9\textwidth]{img/Architecture.png}
-		\caption{Exemple d'architecture matérielle en milieu confiné}
-		\end{figure}
-	%\end{minipage}
-	%\end{center}
-	\end{minipage}
-\end{textblock}
-
-
-
-
-%%%\begin{textblock}{75}(4, 20)
-%%%\begin{minipage}{0.49\textwidth}
-%%%	\begin{block}{1. Contexte}
-%%%	Les ondes radio ne passent pas naturellement dans les milieux confinés, comme les tunnels, les métros ou les bâtiments. La société partenaire du projet, SEE Telecom, développe des répéteurs pour pouvoir créer une continuité de service radio au sein de ces milieux afin d'assurer la communication de services de secours tels que les pompiers, ambulances, police ou encore des services commerciaux tels que le GSM, la FM ou l'AM. Ces services ont une importance capitale pour la sécurité lors d'un incident au sein du milieu confiné.
-%%%	\begin{figure}[!ht]
-%%%	\centering
-%%%	\includegraphics[width=0.9\textwidth]{img/ArchitectureMaterielle.png}
-%%%	\caption{Exemple d'architecture matérielle en milieu confiné}
-%%%	\end{figure}
-%%%	
-%%%	L'entreprise partenaire dispose déjà à ce jour de répéteurs pour de nombreux services radio. Toutefois, ces répéteurs sont basés sur un matériel figé. Par conséquent, si l'on souhaite modifier la configuration pour assurer la transmission d'un autre service, il est nécessaire de se rendre sur place pour opérer les changements, ce qui n'est pas aisé.
-%%%	\end{block}
-%%%	
-%%%	
-%%%	\begin{block}{2. Objectifs}
-%%%	Les objectifs relatifs à ce projet sont multiples :
-%%%%	\begin{itemize}
-%%%%	\item adapter la configuration du répéteur en fonction du matériel;
-%%%%	\item rendre reconfigurable le répéteur sans devoir agir physiquement sur celui-ci;
-%%%%	\item permettre une gestion intelligente de la reconfiguration automatique des modules en cas de panne.
-%%%%	\end{itemize}
-%%%	\end{block}
-%%%\end{minipage}
-%%%\begin{minipage}{0.49\textwidth}
-%%%	\begin{block}{3. Génération des configuration}
-%%%	Il s'agit ici de générer les configurations dites "statiques" d'un répéteur, par exemple, les coefficients d'un filtre donné. Chaque répéteur peut contenir plusieurs configurations statiques et ainsi, l'utilisateur peut passer d'une configuration à une autre.
-%%%	La génération de la configuration statique se fait à l'aide d'un script Python. Les caractéristiques du matériel sont reprises dans un fichier XML. Ainsi, il est facile de générer de nouvelles configurations si le matériel change. À cela peuvent être ajoutés d'autres paramètres spécifiques au service répété.
-%%%	\begin{figure}[!ht]
-%%%	\centering
-%%%	\includegraphics[width=0.9\textwidth]{img/Architecture2.png}
-%%%	\caption{Exemple d'architecture matérielle en milieu confiné}
-%%%	\end{figure}
-%%%	\end{block}
-%%%	\begin{block}{4. Plateforme}
-%%%	La plateforme logicielle n'en est qu'à ses débuts mais elle aura pour objectif de "commander" la reconfiguration des cartes en cas de nécessité. Cette plateforme sera codée en Java. Pour permettre une meilleure gestion graphique de l'interface homme machine, la partie client sera codée en JavaFX. La plateforme supervise les cartes EMS (Element Management System) qui elles-mêmes sont reliées aux divers répéteurs.
-%%%	\begin{figure}[!ht]
-%%%	\centering
-%%%	\includegraphics[width=0.9\textwidth]{img/Architecture2.png}
-%%%	\caption{Exemple d'architecture matérielle en milieu confiné}
-%%%	\end{figure}
-%%%	\end{block}
-%%%\end{minipage}
-%%%\end{textblock}
-
-
-
-
-%%%\begin{block}{Title of block 1}
-%%%First block
-%%%\end{block}
-%%%\begin{block}{Title of block 2}
-%%%Second block
-%%%\end{block}
-
-\end{document}
