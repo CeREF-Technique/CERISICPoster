@@ -1,4 +1,25 @@
-\usepackage[orientation=portrait, size=a0, scale=1.4]{beamerposter}
+\NeedsTeXFormat{LaTeX2e}[1999/01/01]
+\ProvidesPackage{CERISICPoster}[2017/03/12 v0.1]
+
+\RequirePackage[orientation=portrait, size=a0, scale=1.4]{beamerposter}
+\RequirePackage{ifthen}
+\RequirePackage[absolute,overlay]{textpos}
+
+%\DeclareOption{showboxes}{\@showboxes}
+%\DeclareOption{showboxes}{\PassOptionsToPackage{\CurrentOption}{textpos}}
+%\ProcessOptions
+%\ExecuteOptions{showboxes}
+
+%\makeatletter
+
+%\if@showboxes
+%  \RequirePackage[absolute,overlay,showboxes]{textpos}
+%\else
+%  \RequirePackage[absolute,overlay]{textpos}
+%\fi
+
+%\usepackage[orientation=portrait, size=a0, scale=1.4]{beamerposter}
+%\usepackage[absolute,overlay,showboxes]{textpos}
 
 %\usepackage[T1]{fontenc}
 %\usepackage{lmodern}
@@ -6,10 +27,9 @@
 %\usepackage{lipsum}
 %\usepackage{xparse}
 %\usepackage[colorgrid,texcoord]{eso-pic}
-\usepackage[absolute,overlay,showboxes]{textpos}
 
-\usefonttheme{professionalfonts}
 %\usefonttheme{serif}
+\usefonttheme{professionalfonts}
 \usecolortheme{orchid}
 \useoutertheme{default}
 
@@ -19,21 +39,21 @@
 \definecolor{VertBleu}{rgb}{0.055 0.596 0.576}
 \definecolor{blanc}{rgb}{1 1 1}
 
-%Définition de la couleur pour le texte
 \setbeamercolor{normal text}{fg=VertBleu}
 
 \setbeamertemplate{caption}[numbered]
 \setbeamerfont{caption name}{family=\sffamily}
 \setbeamercolor{caption name}{fg=VertBleu}
 
-%Définitions des caractéristiques des blocks
+%Blocks définition
 \setbeamertemplate{blocks}[rounded]{}
+
 %Changement des couleur au niveau du titre du block
 \setbeamercolor{block title}{use=structure,fg=white,bg=VertBleu}
 \setbeamercolor{block title alerted}{use=alerted text,fg=white,bg=alerted text.fg!75!black}
 \setbeamercolor{block title example}{use=example text,fg=white,bg=example text.fg!75!black}
 
-%Suppression des symboles de navigation
+%Navigation symbols suppression
 \setbeamertemplate{navigation symbols}{}
 
 %Changement des couleur au niveau du corps du block
@@ -55,7 +75,9 @@
 
 
 %\setbeamertemplate{background canvas}{\includegraphics[width=\paperwidth,height=\paperheight]{img/Template.png}}
-\makeatletter
+
+
+
 %\def\postertitle#1{\def\@postertitle{#1}} % Title 
 \newcommand{\postertitle}[1]{
   \def\@postertitle{#1}
@@ -99,17 +121,17 @@
 \let\temptwo\enditemize
 \renewenvironment{itemize}{\tempone\addtolength{\itemsep}{0.5\baselineskip}}{\temptwo}
 
-\newsavebox{\fminipagebox}
-\NewDocumentEnvironment{fminipage}{m O{\fboxsep}}
- {\par\kern#2\noindent\begin{lrbox}{\fminipagebox}
-  \begin{minipage}{#1}\ignorespaces}
- {\end{minipage}\end{lrbox}%
-  \makebox[#1]{%
-    \kern\dimexpr-\fboxsep-\fboxrule\relax
-    \fbox{\usebox{\fminipagebox}}%
-    \kern\dimexpr-\fboxsep-\fboxrule\relax
-  }\par\kern#2
- }
+%\newsavebox{\fminipagebox}
+%\NewDocumentEnvironment{fminipage}{m O{\fboxsep}}
+% {\par\kern#2\noindent\begin{lrbox}{\fminipagebox}
+%  \begin{minipage}{#1}\ignorespaces}
+% {\end{minipage}\end{lrbox}%
+%  \makebox[#1]{%
+%    \kern\dimexpr-\fboxsep-\fboxrule\relax
+%    \fbox{\usebox{\fminipagebox}}%
+%    \kern\dimexpr-\fboxsep-\fboxrule\relax
+%  }\par\kern#2
+% }
                                    
 \renewcommand{\maketitle}
 {
@@ -166,3 +188,5 @@
 		\end{minipage}
 	\end{textblock}
 }
+
+\endinput
