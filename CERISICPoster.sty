@@ -132,7 +132,14 @@
 %    \kern\dimexpr-\fboxsep-\fboxrule\relax
 %  }\par\kern#2
 % }
-                                   
+
+\newenvironment{firstcolumn}{\begin{textblock}{36}(4, 20)\begin{minipage}{0.99\textwidth}}{\end{minipage}\end{textblock}}
+\newenvironment{secondcolumn}{\begin{textblock}{2}(40, 20)\begin{minipage}{0.99\textwidth}\begin{center}\rule{5pt}{84cm}\end{center}\end{minipage}\end{textblock}\begin{textblock}{36}(42, 20)\begin{minipage}{0.99\textwidth}}{\end{minipage}
+\end{textblock}}
+
+
+
+
 \newcommand{\makeposter}
 {
 	% Définition de l'image de fond pour le slide de garde
