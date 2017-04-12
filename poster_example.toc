@@ -1,5 +1,0 @@
-\beamer@endinputifotherversion {3.36pt}
-\contentsline {section}{1. Contexte}
-\contentsline {section}{2. Objectifs}
-\contentsline {section}{3. G\IeC {\'e}n\IeC {\'e}ration des configuration}
-\contentsline {section}{4. Plateforme}
