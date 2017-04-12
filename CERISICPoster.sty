@@ -1,10 +1,237 @@
+%----------------------
+% General Informations
+%----------------------
 \NeedsTeXFormat{LaTeX2e}[1999/01/01]
 \ProvidesPackage{CERISICPoster}[2017/03/12 v0.1]
 
+
+%-------------------
+% Required Packages
+%-------------------
 \RequirePackage[orientation=portrait, size=a0, scale=1.4]{beamerposter}
 \RequirePackage{ifthen}
 \RequirePackage[absolute,overlay]{textpos}
 \RequirePackage{graphicx}
+\RequirePackage{multicol}
+\RequirePackage{color}
+%\RequirePackage{sectsty}
+%\RequirePackage{xcolor}
+
+
+%\sectionfont{\color{VertBleu}}
+
+%---------------------
+% Options Declaration
+%---------------------
+\newif\if@scientificpartner \@scientificpartnerfalse
+\DeclareOption{scientificpartner}{\@scientificpartnertrue}
+
+\newif\if@industrialpartner \@industrialpartnerfalse
+\DeclareOption{industrialpartner}{\@industrialpartnertrue}
+
+\newif\if@english \@englishfalse
+\DeclareOption{english}{\@englishtrue}
+
+\newif\if@onecolumn \@onecolumnfalse
+\DeclareOption{onecolumn}{\@onecolumntrue}
+
+\newif\if@twocolumn \@twocolumnfalse
+\DeclareOption{twocolumn}{\@twocolumntrue}
+
+\newif\if@threecolumn \@threecolumnfalse
+\DeclareOption{threecolumn}{\@threecolumntrue}
+
+\newif\if@header \@headerfalse
+\DeclareOption{header}{\@headertrue}
+
+\newif\if@footer \@footerfalse
+\DeclareOption{footer}{\@footertrue}
+
+\DeclareOption*{}%% Do nothing when option is unknown
+\ProcessOptions
+
+
+\if@scientificpartner
+\newcommand{\scientificpartner}[2]{
+  \def\@scientificpartnersize{#1}
+  \def\@scientificpartnerimage{#2}
+  }
+\fi
+
+\if@industrialpartner
+\newcommand{\industrialpartner}[2]{
+  \def\@industrialpartnersize{#1}
+  \def\@industrialpartnerimage{#2}
+  }
+\fi
+
+\if@header
+\newcommand{\header}[1]{
+  \def\@header{#1}
+  }
+\fi
+
+\if@footer
+\newcommand{\footer}[1]{
+  \def\@footer{#1}
+  }
+\fi
+
+
+%------------------
+% Hooks Definition
+%------------------
+\AtBeginDocument{
+\setlength{\TPHorizModule}{1cm}
+\setlength{\TPVertModule}{1cm}
+\makeposter
+%\setlength{\columnseprule}{5pt}
+%\def\columnseprulecolor{\color{VertBleu}}
+\setlength{\columnsep}{2cm}
+%\begin{textblock}{74}(4, 20)
+}
+
+\AtEndDocument{
+%\end{textblock}
+}
+
+
+%---------------
+% Renewcommands
+%---------------
+\renewcommand{\figurename}{Fig}
+\renewcommand{\tablename}{Tab}
+
+
+%-------------
+% NewCommands
+%-------------
+%\def\postertitle#1{\def\@postertitle{#1}} % Title 
+\newcommand{\postertitle}[1]{
+  \def\@postertitle{#1}
+  %\def\@titlesize{#2}
+  }
+
+\newcommand{\postersubtitle}[1]{
+  \def\@postersubtitle{#1}
+  }
+
+\newcommand{\authors}[1]{
+  \def\@authors{#1}
+  }
+  
+\newcommand{\institutes}[1]{
+  \def\@institutes{#1}
+  }
+
+\newcommand{\contact}[1]{
+  \def\@contact{#1}
+  }
+
+
+%------------------
+% Renewenvironment
+%------------------
+
+
+%------------------
+% Newenvironment
+%------------------
+% One-column Definition
+\if@onecolumn
+\newenvironment{poster}{
+    %\begin{frame}
+    \begin{textblock}{74}(4, 20)
+    \if@header
+        \begin{minipage}{0.99\textwidth}
+            \begin{center}
+                \@header
+            \end{center}
+        \end{minipage}
+        \begin{minipage}{0.99\textwidth}
+    \else
+        \begin{minipage}{0.99\textwidth}
+    \fi
+}
+{
+    \end{minipage}
+    \if@footer
+        \begin{minipage}{0.99\textwidth}
+            \begin{center}
+                \@footer
+            \end{center}
+        \end{minipage}
+    \fi
+    \end{textblock}
+    %\end{frame}
+}
+\fi
+
+
+% Two-column Definition
+\if@twocolumn
+\newenvironment{poster}{
+%\begin{frame}
+    \begin{textblock}{74}(4, 20)
+    \if@header
+        \begin{minipage}{0.99\textwidth}
+            \begin{center}
+                \@header
+            \end{center}
+        \end{minipage}
+        \begin{multicols*}{2}
+    \else
+        \begin{multicols*}{2}
+    \fi
+}
+{
+        \end{multicols*}
+    \if@footer
+        \begin{minipage}{0.99\textwidth}
+            \begin{center}
+                \@footer
+            \end{center}
+        \end{minipage}
+    \fi
+    \end{textblock}
+%\end{frame}
+}
+\fi
+
+
+% Three-column Definition
+\if@threecolumn
+\newenvironment{poster}{
+    \begin{textblock}{74}(4, 20)
+    \if@header
+        \begin{minipage}{0.99\textwidth}
+            \begin{center}
+                \@header
+            \end{center}
+        \end{minipage}
+        \begin{multicols}{3}
+    \else
+        \begin{multicols}{3}
+    \fi
+}
+{
+        \end{multicols}
+    \if@footer
+        \begin{minipage}{0.99\textwidth}
+            \begin{center}
+                \@footer
+            \end{center}
+        \end{minipage}
+    \fi
+    \end{textblock}
+}
+\fi
+
+
+
+
+
+
 
 %\DeclareOption{showboxes}{\@showboxes}
 %\DeclareOption{showboxes}{\PassOptionsToPackage{\CurrentOption}{textpos}}
@@ -34,116 +261,82 @@
 \usecolortheme{orchid}
 \useoutertheme{default}
 
-\renewcommand{\figurename}{Fig}
-\renewcommand{\tablename}{Tab}
+
+%\AtBeginSection{%
+%  \setbeamercolor{section}{fg=VertBleu}
+%}
 
 \definecolor{VertBleu}{rgb}{0.055 0.596 0.576}
 \definecolor{blanc}{rgb}{1 1 1}
 
-\setbeamercolor{normal text}{fg=VertBleu}
+\setbeamercolor{normal text}{fg=black}
 
-\setbeamertemplate{caption}[numbered]
-\setbeamerfont{caption name}{family=\sffamily}
-\setbeamercolor{caption name}{fg=VertBleu}
 
-%Blocks définition
+%\setbeamercolor{section}{fg=VertBleu}
+
+%-------------------
+% Blocks Definition
+%-------------------
 \setbeamertemplate{blocks}[rounded]{}
 
-%Changement des couleur au niveau du titre du block
+%-------------
+% Block color
+%-------------
 \setbeamercolor{block title}{use=structure,fg=white,bg=VertBleu}
 \setbeamercolor{block title alerted}{use=alerted text,fg=white,bg=alerted text.fg!75!black}
 \setbeamercolor{block title example}{use=example text,fg=white,bg=example text.fg!75!black}
 
-%Navigation symbols suppression
-\setbeamertemplate{navigation symbols}{}
-
-%Changement des couleur au niveau du corps du block
 \setbeamercolor{block body}{parent=normal text,use=block title,bg=block title.bg!10!bg}
 \setbeamercolor{block body alerted}{parent=normal text,use=block title alerted,bg=block title alerted.bg!10!bg}
 \setbeamercolor{block body example}{parent=normal text,use=block title example,bg=block title example.bg!10!bg}
 
+%-------------------------------
+% Navigation symbols suppression
+%-------------------------------
+\setbeamertemplate{navigation symbols}{}
 
+%----------------------
+% Caption Definition
+%----------------------
+\setbeamertemplate{caption}[numbered]
+\setbeamerfont{caption name}{family=\sffamily}
+\setbeamercolor{caption name}{fg=black}
 
-%Définition des couleurs pour les Enumerate-Items
+%----------------------
+% Enumerate Definition
+%----------------------
 \setbeamercolor{enumerate item}{fg=VertBleu}
 
-%Définition des couleurs pour les Description-Items
+%----------------------
+% Description Definition
+%----------------------
 \setbeamercolor{description item}{fg=VertBleu}
 
-%Définition des "template" et "color" pour les items
+%----------------------
+% Itemize Definition
+%----------------------
 \setbeamercolor{itemize item}{fg=VertBleu}
 \setbeamertemplate{itemize item}[circle]
 
-
-%\setbeamertemplate{background canvas}{\includegraphics[width=\paperwidth,height=\paperheight]{img/Template.png}}
-
-
-
-%\def\postertitle#1{\def\@postertitle{#1}} % Title 
-\newcommand{\postertitle}[1]{
-  \def\@postertitle{#1}
-  %\def\@titlesize{#2}
-  }
-	
-\newcommand{\postersubtitle}[1]{
-  \def\@postersubtitle{#1}
-  }
-
-\newcommand{\authors}[1]{
-  \def\@authors{#1}
-  }
-  
-\newcommand{\institutes}[1]{
-  \def\@institutes{#1}
-  }
-
-\newcommand{\industrialpartner}[2]{
-  \def\@industrialpartnersize{#1}
-  \def\@industrialpartnerimage{#2}
-  }
-
-\newcommand{\scientificpartner}[2]{
-  \def\@scientificpartnersize{#1}
-  \def\@scientificpartnerimage{#2}
-  }
-  
-\newcommand{\contact}[1]{
-  \def\@contact{#1}
-  }
 
 %\renewcommand\thesection{\arabic{section}}
 \newcounter{mysection}
 \renewcommand{\section}{\@startsection {section}{1}{\z@}%
                                    {-3.5ex \@plus -1ex \@minus -.2ex}%
                                    {2.3ex \@plus.2ex}%
-                                   {\normalfont\Large\bfseries}}
+                                   {\normalfont\Large\bfseries\color{VertBleu}}}
 
 \let\tempone\itemize
 \let\temptwo\enditemize
-\renewenvironment{itemize}{\tempone\addtolength{\itemsep}{0.5\baselineskip}}{\temptwo}
 
-%\newsavebox{\fminipagebox}
-%\NewDocumentEnvironment{fminipage}{m O{\fboxsep}}
-% {\par\kern#2\noindent\begin{lrbox}{\fminipagebox}
-%  \begin{minipage}{#1}\ignorespaces}
-% {\end{minipage}\end{lrbox}%
-%  \makebox[#1]{%
-%    \kern\dimexpr-\fboxsep-\fboxrule\relax
-%    \fbox{\usebox{\fminipagebox}}%
-%    \kern\dimexpr-\fboxsep-\fboxrule\relax
-%  }\par\kern#2
-% }
-
-\newenvironment{firstcolumn}{\begin{textblock}{36}(4, 20)\begin{minipage}{0.99\textwidth}}{\end{minipage}\end{textblock}}
-\newenvironment{secondcolumn}{\begin{textblock}{2}(40, 20)\begin{minipage}{0.99\textwidth}\begin{center}\rule{5pt}{84cm}\end{center}\end{minipage}\end{textblock}\begin{textblock}{36}(42, 20)\begin{minipage}{0.99\textwidth}}{\end{minipage}
-\end{textblock}}
 
 
 
 
 \newcommand{\makeposter}
 {
-	% Définition de l'image de fond pour le slide de garde
+    % Background Definition
+    %-----------------------
 	\setbeamertemplate{background canvas}{\includegraphics[width=\paperwidth,height=\paperheight]{img/Template.png}}
 	\begin{textblock}{49}(30, 5)
 		\begin{minipage}{0.99\textwidth}
@@ -162,38 +355,104 @@
 		\end{minipage}
 	\end{textblock}
 	
+	% Contact Definition
+	%--------------------
 	\begin{textblock}{75}(4, 105.5)
 	\textbf{Contact:} \@contact
 	\end{textblock}
 	
+	% Promoter Informations
+	%-----------------------
 	\begin{textblock}{12}(4, 108)
 		\begin{center}
-		\textbf{Promoteur}
+			\if@english
+                \textbf{Promoter}
+            \else
+                \textbf{Promoteur}
+			\fi
 		\end{center}
 	\end{textblock}
+	
+	% Industrial and Scientific Partner Titles Definition
+	%-----------------------------------------------------
 	\begin{textblock}{32}(20, 108)
-		\begin{minipage}{0.49\textwidth}
-			\begin{center}
-			\textbf{Partenaire industriel}
-			\end{center}
-		\end{minipage}
-		\begin{minipage}{0.49\textwidth}
-			\begin{center}
-			\textbf{Partenaire scientifique}
-			\end{center}
-		\end{minipage}
+    \if@industrialpartner
+        \if@scientificpartner
+            \begin{minipage}{0.49\textwidth}
+                \begin{center}
+                    \if@english
+                        \textbf{Industrial Partner}
+                    \else
+                        \textbf{Partenaire industriel}
+                    \fi
+                \end{center}
+            \end{minipage}
+            \begin{minipage}{0.49\textwidth}
+                \begin{center}
+                    \if@english
+                        \textbf{Scientific Partner}
+                    \else
+                        \textbf{Partenaire scientifique}
+                    \fi
+                \end{center}
+            \end{minipage}
+        \else
+            \begin{minipage}{0.99\textwidth}
+                \begin{center}
+                    \if@english
+                        \textbf{Industrial Partner}
+                    \else
+                        \textbf{Partenaire industriel}
+                    \fi
+                \end{center}
+            \end{minipage}
+        \fi
+    \else
+        \if@scientificpartner
+            \begin{minipage}{0.99\textwidth}
+                \begin{center}
+                    \if@english
+                        \textbf{Scientific Partner}
+                    \else
+                        \textbf{Partenaire scientifique}
+                    \fi
+                \end{center}
+            \end{minipage}
+        \fi
+    \fi
 	\end{textblock}
+	
+	% Industrial and Scientific Partner Images Definition
+	%-----------------------------------------------------
 	\begin{textblock}{32}(20, 110)
-		\begin{minipage}{0.49\textwidth}
-			\begin{center}
-			\includegraphics[width=\@industrialpartnersize]{\@industrialpartnerimage}
-			\end{center}
-		\end{minipage}
-		\begin{minipage}{0.49\textwidth}
-			\begin{center}
-			\includegraphics[width=\@scientificpartnersize]{\@scientificpartnerimage}
-			\end{center}
-		\end{minipage}
+        \if@industrialpartner
+            \if@scientificpartner
+                \begin{minipage}{0.49\textwidth}
+                    \begin{center}
+                    \includegraphics[width=\@industrialpartnersize]{\@industrialpartnerimage}
+                    \end{center}
+                \end{minipage}
+                \begin{minipage}{0.49\textwidth}
+                    \begin{center}
+                    \includegraphics[width=\@scientificpartnersize]{\@scientificpartnerimage}
+                    \end{center}
+                \end{minipage}
+            \else
+                \begin{minipage}{0.99\textwidth}
+                    \begin{center}
+                    \includegraphics[width=\@industrialpartnersize]{\@industrialpartnerimage}
+                    \end{center}
+                \end{minipage}
+            \fi
+        \else
+            \if@scientificpartner
+                \begin{minipage}{0.99\textwidth}
+                    \begin{center}
+                    \includegraphics[width=\@scientificpartnersize]{\@scientificpartnerimage}
+                    \end{center}
+                \end{minipage}
+            \fi
+        \fi
 	\end{textblock}
 }
 
