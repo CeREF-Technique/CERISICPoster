@@ -2,7 +2,7 @@
 % General Informations
 %----------------------
 \NeedsTeXFormat{LaTeX2e}[1999/01/01]
-\ProvidesPackage{CERISICPoster}[2017/03/12 v0.1]
+\ProvidesPackage{CERISICPoster}[2017/04/12 v0.2]
 
 
 %-------------------
@@ -14,6 +14,8 @@
 \RequirePackage{graphicx}
 \RequirePackage{multicol}
 \RequirePackage{color}
+\RequirePackage{ragged2e}
+\RequirePackage{environ}
 %\RequirePackage{sectsty}
 %\RequirePackage{xcolor}
 
@@ -52,24 +54,25 @@
 
 
 \if@scientificpartner
-\newcommand{\scientificpartner}[2]{
-  \def\@scientificpartnersize{#1}
-  \def\@scientificpartnerimage{#2}
+\newcommand{\scientificpartner}[1]{
+  \def\@scientificpartnerimage{#1}
   }
 \fi
 
 \if@industrialpartner
-\newcommand{\industrialpartner}[2]{
-  \def\@industrialpartnersize{#1}
-  \def\@industrialpartnerimage{#2}
+\newcommand{\industrialpartner}[1]{
+  \def\@industrialpartnerimage{#1}
   }
 \fi
 
-\if@header
-\newcommand{\header}[1]{
-  \def\@header{#1}
-  }
-\fi
+%\if@header
+%%\NewEnviron{headerenv}{
+%%  \BODY
+%%}
+%\newcommand{\header}[1]{
+%  \def\@header{#1}
+%}
+%\fi
 
 \if@footer
 \newcommand{\footer}[1]{
@@ -85,6 +88,7 @@
 \setlength{\TPHorizModule}{1cm}
 \setlength{\TPVertModule}{1cm}
 \makeposter
+\justify
 %\setlength{\columnseprule}{5pt}
 %\def\columnseprulecolor{\color{VertBleu}}
 \setlength{\columnsep}{2cm}
@@ -322,8 +326,8 @@
 %\renewcommand\thesection{\arabic{section}}
 \newcounter{mysection}
 \renewcommand{\section}{\@startsection {section}{1}{\z@}%
-                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
-                                   {2.3ex \@plus.2ex}%
+                                   {-1.5ex \@plus -1ex \@minus -.2ex}%
+                                   {1.5ex \@plus.2ex}%
                                    {\normalfont\Large\bfseries\color{VertBleu}}}
 
 \let\tempone\itemize
@@ -358,63 +362,65 @@
 	% Contact Definition
 	%--------------------
 	\begin{textblock}{75}(4, 105.5)
-	\textbf{Contact:} \@contact
+	 \textcolor{VertBleu}{\textbf{Contact:} \@contact}
 	\end{textblock}
 	
 	% Promoter Informations
 	%-----------------------
 	\begin{textblock}{12}(4, 108)
-		\begin{center}
-			\if@english
-                \textbf{Promoter}
-            \else
-                \textbf{Promoteur}
-			\fi
-		\end{center}
+        \begin{minipage}{0.99\textwidth}
+            \begin{center}
+                \if@english
+                    \textcolor{VertBleu}{\textbf{Promoter}}
+                \else
+                    \textcolor{VertBleu}{\textbf{Promoteur}}
+                \fi
+            \end{center}
+        \end{minipage}
 	\end{textblock}
 	
 	% Industrial and Scientific Partner Titles Definition
 	%-----------------------------------------------------
 	\begin{textblock}{32}(20, 108)
     \if@industrialpartner
-        \if@scientificpartner
+        \if@scientificpartner % \@industrialpartner == True && \@scientificpartner == True
             \begin{minipage}{0.49\textwidth}
                 \begin{center}
                     \if@english
-                        \textbf{Industrial Partner}
+                        \textcolor{VertBleu}{\textbf{Industrial Partner}}
                     \else
-                        \textbf{Partenaire industriel}
+                        \textcolor{VertBleu}{\textbf{Partenaire industriel}}
                     \fi
                 \end{center}
             \end{minipage}
             \begin{minipage}{0.49\textwidth}
                 \begin{center}
                     \if@english
-                        \textbf{Scientific Partner}
+                        \textcolor{VertBleu}{\textbf{Scientific Partner}}
                     \else
-                        \textbf{Partenaire scientifique}
+                        \textcolor{VertBleu}{\textbf{Partenaire scientifique}}
                     \fi
                 \end{center}
             \end{minipage}
-        \else
+        \else %\@industrialpartner == True && \@scientificpartner == False
             \begin{minipage}{0.99\textwidth}
                 \begin{center}
                     \if@english
-                        \textbf{Industrial Partner}
+                        \textcolor{VertBleu}{\textbf{Industrial Partner}}
                     \else
-                        \textbf{Partenaire industriel}
+                        \textcolor{VertBleu}{\textbf{Partenaire industriel}}
                     \fi
                 \end{center}
             \end{minipage}
         \fi
     \else
-        \if@scientificpartner
+        \if@scientificpartner   %\@industrialpartner == False && \@scientificpartner == True
             \begin{minipage}{0.99\textwidth}
                 \begin{center}
                     \if@english
-                        \textbf{Scientific Partner}
+                        \textcolor{VertBleu}{\textbf{Scientific Partner}}
                     \else
-                        \textbf{Partenaire scientifique}
+                        \textcolor{VertBleu}{\textbf{Partenaire scientifique}}
                     \fi
                 \end{center}
             \end{minipage}
@@ -429,18 +435,18 @@
             \if@scientificpartner
                 \begin{minipage}{0.49\textwidth}
                     \begin{center}
-                    \includegraphics[width=\@industrialpartnersize]{\@industrialpartnerimage}
+                    \@industrialpartnerimage
                     \end{center}
                 \end{minipage}
                 \begin{minipage}{0.49\textwidth}
                     \begin{center}
-                    \includegraphics[width=\@scientificpartnersize]{\@scientificpartnerimage}
+                    \@scientificpartnerimage
                     \end{center}
                 \end{minipage}
             \else
                 \begin{minipage}{0.99\textwidth}
                     \begin{center}
-                    \includegraphics[width=\@industrialpartnersize]{\@industrialpartnerimage}
+                    \@industrialpartnerimage
                     \end{center}
                 \end{minipage}
             \fi
@@ -448,7 +454,7 @@
             \if@scientificpartner
                 \begin{minipage}{0.99\textwidth}
                     \begin{center}
-                    \includegraphics[width=\@scientificpartnersize]{\@scientificpartnerimage}
+                    \@scientificpartnerimage
                     \end{center}
                 \end{minipage}
             \fi
