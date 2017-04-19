@@ -2,7 +2,7 @@
 % General Informations
 %----------------------
 \NeedsTeXFormat{LaTeX2e}[1999/01/01]
-\ProvidesPackage{CERISICPoster}[2017/03/12 v0.1]
+\ProvidesPackage{CERISICPoster}[2017/04/12 v0.2]
 
 
 %-------------------
@@ -15,6 +15,7 @@
 \RequirePackage{multicol}
 \RequirePackage{color}
 \RequirePackage{ragged2e}
+\RequirePackage{environ}
 %\RequirePackage{sectsty}
 %\RequirePackage{xcolor}
 
@@ -64,11 +65,14 @@
   }
 \fi
 
-\if@header
-\newcommand{\header}[1]{
-  \def\@header{#1}
-  }
-\fi
+%\if@header
+%%\NewEnviron{headerenv}{
+%%  \BODY
+%%}
+%\newcommand{\header}[1]{
+%  \def\@header{#1}
+%}
+%\fi
 
 \if@footer
 \newcommand{\footer}[1]{
@@ -322,8 +326,8 @@
 %\renewcommand\thesection{\arabic{section}}
 \newcounter{mysection}
 \renewcommand{\section}{\@startsection {section}{1}{\z@}%
-                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
-                                   {2.3ex \@plus.2ex}%
+                                   {-1.5ex \@plus -1ex \@minus -.2ex}%
+                                   {1.5ex \@plus.2ex}%
                                    {\normalfont\Large\bfseries\color{VertBleu}}}
 
 \let\tempone\itemize
